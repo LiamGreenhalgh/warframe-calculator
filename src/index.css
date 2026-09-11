@@ -73,3 +73,20 @@ h3,
   scrollbar-width: thin;
   scrollbar-color: #2a3140 transparent;
 }
+
+.katex-host {
+  color: var(--color-gold);
+}
+
+.katex-host .katex {
+  font-size: 1.15em;
+  color: inherit;
+}
+
+.katex-host .katex-display {
+  margin: 0.35em 0;
+}
+
+.katex-host .katex-error {
+  color: var(--color-tenno);
+}

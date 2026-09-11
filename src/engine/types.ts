@@ -78,7 +78,7 @@ export interface CalcResult {
   source: WikiSource;
   assumption?: string;
   displayRounded?: number;
-  kind?: "documented" | "hypothesis" | "estimate";
+  kind?: "documented" | "estimate";
 }
 
 export interface Bonus {

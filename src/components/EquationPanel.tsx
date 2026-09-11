@@ -1,6 +1,7 @@
 import type { CalcResult } from "@/engine/types";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { KindBadge, StackingBadge } from "@/components/StackingBadge";
+import { Latex } from "@/components/Latex";
 import { formatNumber } from "@/lib/utils";
 
 export function EquationPanel({ result, empty }: { result?: CalcResult | null; empty?: string }) {
@@ -39,14 +40,15 @@ export function EquationPanel({ result, empty }: { result?: CalcResult | null; e
         </div>
         <div>
           <div className="text-xs uppercase tracking-wider text-mute">Formula</div>
-          <pre className="mt-1 overflow-x-auto whitespace-pre-wrap font-mono text-xs text-cyan">{result.formula}</pre>
+          {result.latex ? (
+            <Latex tex={result.latex} display />
+          ) : (
+            <pre className="mt-1 overflow-x-auto whitespace-pre-wrap font-mono text-xs text-cyan">{result.formula}</pre>
+          )}
+          {result.latex && result.formula ? (
+            <pre className="mt-2 overflow-x-auto whitespace-pre-wrap font-mono text-[11px] text-mute">{result.formula}</pre>
+          ) : null}
         </div>
-        {result.latex ? (
-          <div>
-            <div className="text-xs uppercase tracking-wider text-mute">LaTeX</div>
-            <pre className="mt-1 overflow-x-auto font-mono text-xs text-mute">{result.latex}</pre>
-          </div>
-        ) : null}
         <div>
           <div className="text-xs uppercase tracking-wider text-mute">Substituted</div>
           <pre className="mt-1 overflow-x-auto whitespace-pre-wrap font-mono text-xs text-ink">{result.substituted}</pre>

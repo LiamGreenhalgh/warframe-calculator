@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { FORMULA_CATALOG, asCalcResult, type FormulaDoc } from "@/engine/formulas";
 import { EquationPanel } from "@/components/EquationPanel";
+import { Latex } from "@/components/Latex";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input, Label, NativeSelect } from "@/components/ui/input";
 import { KindBadge, StackingBadge } from "@/components/StackingBadge";
@@ -40,8 +41,7 @@ export function EquationsPage() {
         <CardHeader>
           <CardTitle>Equation explorer</CardTitle>
           <CardDescription>
-            Every formula Tenno Calculus implements, with wiki citations. Hypothesis rows are never mixed into official
-            results.
+            Every formula Tenno Calculus implements, with wiki citations. Rendered math uses the same LaTeX the engine stores.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-3">
@@ -63,7 +63,6 @@ export function EquationsPage() {
               <NativeSelect value={kind} onChange={(e) => setKind(e.target.value as typeof kind)}>
                 <option value="all">all</option>
                 <option value="documented">documented</option>
-                <option value="hypothesis">hypothesis</option>
                 <option value="estimate">estimate</option>
               </NativeSelect>
             </div>
@@ -84,7 +83,11 @@ export function EquationsPage() {
                       <StackingBadge stacking={f.stacking} />
                       <KindBadge kind={f.kind} />
                     </div>
-                    <span className="font-mono text-xs text-cyan">{f.formula}</span>
+                    {f.latex ? (
+                      <Latex tex={f.latex} display={false} className="mt-1" />
+                    ) : (
+                      <span className="font-mono text-xs text-cyan">{f.formula}</span>
+                    )}
                   </button>
                 </li>
               ))}

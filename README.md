@@ -48,15 +48,7 @@ Wiki examples:
 - 2 electricity + 3 Crimson → **240%**
 - 5 Tauforged electricity → **600%**
 
-The bonus is **additive** with Stormbringer. The extra term counts the originating shard and also Crimson / Azure, not “other purples only.”
-
-**Community hypothesis** (shown only as a labeled comparison, never as the official result):
-
-```
-1 + (0.45 + 0.15(x − 1)) × x
-```
-
-That version uses `(x − 1)` “other purples,” so 1 shard would be 45% and 5 shards 525%. The wiki contradicts both numbers.
+The bonus is **additive** with Stormbringer. The extra term counts the originating shard and also Crimson / Azure, not only other Violet shards.
 
 ## Loadout import
 

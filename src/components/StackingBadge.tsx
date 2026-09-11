@@ -14,8 +14,7 @@ export function StackingBadge({ stacking }: { stacking: StackingClass }) {
   return <Badge variant={spec.variant}>{spec.text}</Badge>;
 }
 
-export function KindBadge({ kind }: { kind?: "documented" | "hypothesis" | "estimate" }) {
-  if (kind === "hypothesis") return <Badge variant="hypothesis">Community hypothesis</Badge>;
+export function KindBadge({ kind }: { kind?: "documented" | "estimate" }) {
   if (kind === "estimate") return <Badge variant="estimate">Estimate / assumption</Badge>;
   return <Badge variant="documented">Wiki-documented</Badge>;
 }

@@ -3,8 +3,6 @@ import {
   documentedElectricityBonus,
   documentedElectricityContribution,
   explainVioletElectricity,
-  hypothesizedElectricityBonus,
-  hypothesizedElectricityMultiplier,
   type SocketedShard,
 } from "./shards";
 
@@ -52,22 +50,10 @@ describe("violet / purple archon shard electricity", () => {
     expect(documentedElectricityBonus(shards)).toBeCloseTo(0.6);
   });
 
-  it("does not treat the user hypothesis as official", () => {
-    const hypo = hypothesizedElectricityBonus(5);
-    const wiki = documentedElectricityBonus(tauElec(5));
-    expect(hypo).toBeCloseTo(5.25);
-    expect(wiki).toBeCloseTo(6);
-    expect(hypothesizedElectricityMultiplier(5)).toBeCloseTo(1 + 5.25);
-
+  it("exposes only the wiki formula on the report", () => {
     const report = explainVioletElectricity(tauElec(5));
-    expect(report.differs).toBe(true);
     expect(report.documented.kind).toBe("documented");
-    expect(report.hypothesis.kind).toBe("hypothesis");
-    expect(report.hypothesis.name.toLowerCase()).toContain("hypothesis");
-  });
-
-  it("hypothesis uses (x-1) other purples, so 1 shard is 45% not 60%", () => {
-    expect(hypothesizedElectricityBonus(1)).toBeCloseTo(0.45);
-    expect(documentedElectricityBonus(tauElec(1))).toBeCloseTo(0.6);
+    expect(report.documented.latex).toBeTruthy();
+    expect(report.documented.name.toLowerCase()).not.toContain("hypothesis");
   });
 });

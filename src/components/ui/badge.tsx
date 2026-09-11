@@ -13,7 +13,6 @@ const badgeVariants = cva(
         flat: "border-mute bg-white/5 text-mute",
         set: "border-tenno bg-tenno/15 text-tenno",
         mixed: "border-electric bg-electric/15 text-electric",
-        hypothesis: "border-dashed border-electric text-electric",
         estimate: "border-muted-foreground/40 text-mute",
         documented: "border-gold/30 text-gold",
       },

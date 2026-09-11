@@ -14,7 +14,6 @@ import { EquationPanel } from "@/components/EquationPanel";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input, Label, NativeSelect } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
 import { KindBadge, StackingBadge } from "@/components/StackingBadge";
 import { formatPercent } from "@/lib/utils";
 import type { CalcResult } from "@/engine/types";
@@ -46,7 +45,6 @@ export function ShardsPage({
   );
   const [energy, setEnergy] = useState(525);
   const [focus, setFocus] = useState<CalcResult | null>(null);
-  const [showHypo, setShowHypo] = useState(true);
 
   const report = useMemo(() => explainVioletElectricity(shards), [shards]);
   const melee = violetMeleeCritDamage(shards, energy);
@@ -73,8 +71,8 @@ export function ShardsPage({
           <CardHeader>
             <CardTitle>Archon Shard calculator</CardTitle>
             <CardDescription>
-              Five Helminth sockets. Tauforged is 1.5× the card. Violet electricity is the formula the wiki actually prints —
-              not “15% for each other purple.”
+              Five Helminth sockets. Tauforged is 1.5× the card. Violet electricity uses the wiki formula: each shard
+              contributes base + extra × N, and N counts every Crimson, Azure, and Violet shard including itself.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
@@ -170,27 +168,6 @@ export function ShardsPage({
               Amber, Topaz, and Emerald do not increment N. Electricity combines after mods, like an innate element (HCET with
               valence).
             </p>
-            <label className="flex items-center gap-2 text-sm">
-              <input type="checkbox" checked={showHypo} onChange={(e) => setShowHypo(e.target.checked)} />
-              Show community hypothesis
-            </label>
-            {showHypo ? (
-              <div className="rounded-md border border-dashed border-electric/60 p-3">
-                <div className="flex flex-wrap items-center gap-2">
-                  <Badge variant="hypothesis">Not official</Badge>
-                  <span className="text-sm">
-                    User guess: 1 + (0.45 + 0.15(x − 1)) × x → bonus {formatPercent(report.hypothesis.value, 1)}
-                  </span>
-                  <Button type="button" size="sm" variant="ghost" onClick={() => setFocus(report.hypothesis)}>
-                    Compare equation
-                  </Button>
-                </div>
-                <p className="mt-2 text-xs text-mute">
-                  This treats +15% as “each other purple” and ignores Crimson/Azure. Wiki examples contradict it (1 Tauforged
-                  electricity is 60%, not 45%). {report.differs ? "It currently disagrees with the documented result." : "It happens to match this socket layout."}
-                </p>
-              </div>
-            ) : null}
           </CardContent>
         </Card>
 

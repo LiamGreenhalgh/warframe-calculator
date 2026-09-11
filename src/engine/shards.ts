@@ -124,28 +124,8 @@ export function documentedElectricityBonus(shards: SocketedShard[]): number {
     .reduce((sum, s) => sum + documentedElectricityContribution(s.tauforged, n), 0);
 }
 
-/**
- * Community hypothesis provided by the user:
- *   multiplier = 1 + (0.45 + 0.15(x − 1)) × x
- * i.e. each Tauforged electricity shard gives 45% plus 15% for every *other*
- * purple, then those percents are added across x electricity shards.
- *
- * This disagrees with the wiki: the extra 15% counts the shard itself, and
- * eligible colors are Crimson + Azure + Violet, not "other purples" only.
- */
-export function hypothesizedElectricityBonus(electricityShardCount: number): number {
-  const x = electricityShardCount;
-  return (0.45 + 0.15 * (x - 1)) * x;
-}
-
-export function hypothesizedElectricityMultiplier(electricityShardCount: number): number {
-  return 1 + hypothesizedElectricityBonus(electricityShardCount);
-}
-
 export interface VioletElectricityReport {
   documented: CalcResult;
-  hypothesis: CalcResult;
-  differs: boolean;
   wikiExamples: Array<{ label: string; bonus: number }>;
   eligibleCount: number;
   electricityCount: number;
@@ -155,7 +135,6 @@ export function explainVioletElectricity(shards: SocketedShard[]): VioletElectri
   const n = eligibleElectricityCount(shards);
   const elec = shards.filter((s) => s.color === "violet" && s.buff === "primaryElectricity");
   const documentedBonus = documentedElectricityBonus(shards);
-  const hypoBonus = hypothesizedElectricityBonus(elec.length);
 
   const terms: EquationTerm[] = elec.map((s, i) => ({
     name: `${s.tauforged ? "Tauforged" : "Normal"} violet electricity #${i + 1}`,
@@ -189,32 +168,8 @@ export function explainVioletElectricity(shards: SocketedShard[]): VioletElectri
     kind: "documented",
   };
 
-  const hypothesis: CalcResult = {
-    id: "violet-elec-hypothesis",
-    name: "Community hypothesis (not official)",
-    value: hypoBonus,
-    unit: "percent-as-decimal",
-    formula: "1 + (0.45 + 0.15(x − 1)) × x   → bonus = (0.45 + 0.15(x − 1)) × x",
-    latex: String.raw`1 + \big(0.45 + 0.15(x-1)\big)x`,
-    substituted: `x=${elec.length} electricity shards; bonus = (0.45 + 0.15×${Math.max(elec.length - 1, 0)}) × ${elec.length} = ${hypoBonus}`,
-    stacking: "additive",
-    terms: [
-      { name: "Electricity shard count (x)", symbol: "x", value: elec.length, stacking: "flat" },
-    ],
-    source: {
-      title: "User-provided community hypothesis",
-      url: "https://wiki.warframe.com/w/Violet_Archon_Shard",
-      notes: "Assumes every electricity shard is Tauforged and that +15% only counts other purples. Wiki examples contradict this.",
-    },
-    assumption:
-      "Treats extra +15% as 'each other purple' (x−1) and ignores Crimson/Azure eligibility. Not used as the official result.",
-    kind: "hypothesis",
-  };
-
   return {
     documented,
-    hypothesis,
-    differs: Math.abs(documentedBonus - hypoBonus) > 1e-9,
     wikiExamples: [
       { label: "1 Tauforged electricity", bonus: 0.6 },
       { label: "2 Tauforged electricity", bonus: 1.5 },
