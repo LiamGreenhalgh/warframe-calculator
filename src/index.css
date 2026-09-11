@@ -1,0 +1,75 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Teko", "Arial Narrow", sans-serif;
+  --font-sans: "Barlow", "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  --color-void: #07080c;
+  --color-panel: #10131a;
+  --color-panel-2: #161b24;
+  --color-line: #2a3140;
+  --color-gold: #c8aa6e;
+  --color-gold-dim: #8a7344;
+  --color-tenno: #e24a3b;
+  --color-electric: #8b7cff;
+  --color-cyan: #4fd2d9;
+  --color-ink: #e8e4d9;
+  --color-mute: #8b93a7;
+
+  --color-background: #07080c;
+  --color-foreground: #e8e4d9;
+  --color-card: #10131a;
+  --color-card-foreground: #e8e4d9;
+  --color-popover: #161b24;
+  --color-popover-foreground: #e8e4d9;
+  --color-primary: #c8aa6e;
+  --color-primary-foreground: #14110b;
+  --color-secondary: #1c2230;
+  --color-secondary-foreground: #e8e4d9;
+  --color-muted: #1c2230;
+  --color-muted-foreground: #8b93a7;
+  --color-accent: #242b3a;
+  --color-accent-foreground: #e8e4d9;
+  --color-destructive: #e24a3b;
+  --color-border: #2a3140;
+  --color-input: #2a3140;
+  --color-ring: #c8aa6e;
+  --radius: 0.35rem;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+  background: var(--color-void);
+  color: var(--color-ink);
+}
+
+body {
+  font-family: var(--font-sans);
+  background-image:
+    radial-gradient(1200px 500px at 10% -10%, rgba(200, 170, 110, 0.08), transparent 50%),
+    radial-gradient(900px 400px at 100% 0%, rgba(139, 124, 255, 0.08), transparent 45%),
+    linear-gradient(rgba(42, 49, 64, 0.25) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(42, 49, 64, 0.25) 1px, transparent 1px);
+  background-size: auto, auto, 48px 48px, 48px 48px;
+}
+
+h1,
+h2,
+h3,
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+::selection {
+  background: rgba(200, 170, 110, 0.35);
+}
+
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: #2a3140 transparent;
+}

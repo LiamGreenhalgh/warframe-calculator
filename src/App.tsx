@@ -1,51 +1,41 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import { invoke } from "@tauri-apps/api/core";
-import "./App.css";
+import { sampleLoadout } from "@/import/parse";
+import type { TennoLoadout } from "@/import/schema";
+import type { SocketedShard } from "@/engine/shards";
+import { Shell, type AppPage } from "@/components/Shell";
+import { WeaponPage } from "@/pages/WeaponPage";
+import { ShardsPage } from "@/pages/ShardsPage";
+import { AbilityPage } from "@/pages/AbilityPage";
+import { ArmorPage } from "@/pages/ArmorPage";
+import { StackingPage } from "@/pages/StackingPage";
+import { ImportPage } from "@/pages/ImportPage";
+import { EquationsPage } from "@/pages/EquationsPage";
 
-function App() {
-  const [greetMsg, setGreetMsg] = useState("");
-  const [name, setName] = useState("");
+export default function App() {
+  const [page, setPage] = useState<AppPage>("shards");
+  const [loadout, setLoadout] = useState<TennoLoadout>(() => sampleLoadout());
 
-  async function greet() {
-    // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
-    setGreetMsg(await invoke("greet", { name }));
+  function onShards(shards: SocketedShard[]) {
+    setLoadout((prev) => ({
+      ...prev,
+      warframe: {
+        id: prev.warframe?.id ?? "volt-prime",
+        name: prev.warframe?.name,
+        mods: prev.warframe?.mods,
+        shards,
+      },
+    }));
   }
 
   return (
-    <main className="container">
-      <h1>Welcome to Tauri + React</h1>
-
-      <div className="row">
-        <a href="https://vite.dev" target="_blank">
-          <img src="/vite.svg" className="logo vite" alt="Vite logo" />
-        </a>
-        <a href="https://tauri.app" target="_blank">
-          <img src="/tauri.svg" className="logo tauri" alt="Tauri logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <p>Click on the Tauri, Vite, and React logos to learn more.</p>
-
-      <form
-        className="row"
-        onSubmit={(e) => {
-          e.preventDefault();
-          greet();
-        }}
-      >
-        <input
-          id="greet-input"
-          onChange={(e) => setName(e.currentTarget.value)}
-          placeholder="Enter a name..."
-        />
-        <button type="submit">Greet</button>
-      </form>
-      <p>{greetMsg}</p>
-    </main>
+    <Shell page={page} onPage={setPage} loadout={loadout}>
+      {page === "weapons" ? <WeaponPage loadout={loadout} /> : null}
+      {page === "shards" ? <ShardsPage loadout={loadout} onShards={onShards} /> : null}
+      {page === "abilities" ? <AbilityPage loadout={loadout} /> : null}
+      {page === "armor" ? <ArmorPage /> : null}
+      {page === "stacking" ? <StackingPage /> : null}
+      {page === "import" ? <ImportPage loadout={loadout} onLoadout={setLoadout} /> : null}
+      {page === "equations" ? <EquationsPage /> : null}
+    </Shell>
   );
 }
-
-export default App;

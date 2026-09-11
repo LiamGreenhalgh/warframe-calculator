@@ -1,5 +1,7 @@
 import type { CalcResult, EquationTerm, ShardColor } from "./types";
 
+export type { ShardColor };
+
 const VIOLET_SOURCE = {
   title: "Violet Archon Shard — Primary Electricity Damage",
   url: "https://wiki.warframe.com/w/Violet_Archon_Shard",

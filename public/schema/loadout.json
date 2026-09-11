@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tenno-calculus.local/schema/loadout.json",
+  "title": "Tenno Calculus loadout",
+  "type": "object",
+  "required": ["schema", "schemaVersion", "name"],
+  "properties": {
+    "schema": { "const": "tenno-calculus-loadout" },
+    "schemaVersion": { "type": "integer", "minimum": 1 },
+    "source": { "type": "string" },
+    "name": { "type": "string" },
+    "notes": { "type": "string" },
+    "warframe": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "mods": { "type": "array", "items": { "type": "string" } },
+        "shards": {
+          "type": "array",
+          "maxItems": 5,
+          "items": {
+            "type": "object",
+            "required": ["color", "tauforged", "buff"],
+            "properties": {
+              "color": {
+                "enum": ["crimson", "amber", "azure", "topaz", "violet", "emerald"]
+              },
+              "tauforged": { "type": "boolean" },
+              "buff": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "primary": { "$ref": "#/$defs/weapon" },
+    "secondary": { "$ref": "#/$defs/weapon" },
+    "melee": { "$ref": "#/$defs/weapon" }
+  },
+  "$defs": {
+    "weapon": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "mods": { "type": "array", "items": { "type": "string" } },
+        "uniqueName": { "type": "string" }
+      }
+    }
+  }
+}

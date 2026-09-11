@@ -90,7 +90,6 @@ export function finalChannelDrain(
 export function calculateAbilities(input: AbilityModInput): AbilityReport {
   const strength = applyBonuses(1, input.strengthBonuses).result;
   const duration = applyBonuses(1, input.durationBonuses).result;
-  const range = applyBonuses(1, input.rangeBonuses).result;
   const efficiency = applyBonuses(1, input.efficiencyBonuses).result;
 
   const cost = finalCastCost(input.baseCastCost, efficiency);
