@@ -2,7 +2,9 @@
 
 A standalone **Warframe calculator** for bonus stacking, weapon DPS, Archon Shards, abilities, and enemy mitigation. Every result is paired with the equation, substituted values, a variable glossary, and whether each term is **+X% additive** or **× multiplicative**.
 
-The UI runs in a browser (Vite) and as a native Windows / macOS / Linux app (Tauri 2).
+**Live site:** [https://liamgreenhalgh.github.io/warframe-calculator/](https://liamgreenhalgh.github.io/warframe-calculator/)
+
+The UI runs in a browser (Vite), on GitHub Pages, and as a native Windows / macOS / Linux app (Tauri 2).
 
 ## What it calculates
 
@@ -66,6 +68,14 @@ Live Warframe login is **not** used (no account secrets).
 4. **WFCD / warframestat.us** — public item names can be matched against the bundled dataset. If a name is missing, the UI warns and you can still edit by hand.
 
 Schema id: `tenno-calculus-loadout` (see `src/import/schema.ts` and the Loadout page).
+
+## GitHub Pages
+
+Pushes to `main` build the web app and publish it to GitHub Pages:
+
+[https://liamgreenhalgh.github.io/warframe-calculator/](https://liamgreenhalgh.github.io/warframe-calculator/)
+
+The repo is public so anyone can open that URL. Desktop/Tauri builds are unchanged; Pages only hosts the Vite web bundle.
 
 ## Run (web preview)
 

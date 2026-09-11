@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "type": "module",
   "description": "Warframe calculator for bonus stacking, weapon DPS, archon shards, abilities, and enemy mitigation.",
+  "homepage": "https://liamgreenhalgh.github.io/warframe-calculator/",
   "scripts": {
     "dev": "vite --host 0.0.0.0 --port 4729",
     "build": "tsc && vite build",

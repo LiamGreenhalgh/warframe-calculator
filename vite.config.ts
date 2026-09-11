@@ -6,7 +6,10 @@ import process from "node:process";
 
 const host = process.env.TAURI_DEV_HOST;
 
+const pagesBase = process.env.BASE_PATH || "/";
+
 export default defineConfig(() => ({
+  base: pagesBase,
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
